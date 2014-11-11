@@ -6,7 +6,7 @@
 #    By: klescaud <klescaud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/11 12:27:54 by klescaud          #+#    #+#              #
-#    Updated: 2014/11/11 12:37:03 by klescaud         ###   ########.fr        #
+#    Updated: 2014/11/11 13:13:39 by klescaud         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -20,7 +20,7 @@ INCLUDES =	-I./includes/ -I./source/libft/includes/
 
 CFLAGS =	-Wall -Wextra -Werror
 
-CLIB =		-L./source/libft/ -lft
+CLIB =		-L./source/libft/ -L/usr/X11/lib -lft -lmlx -lXext -lX11
 
 all: $(NAME)
 
