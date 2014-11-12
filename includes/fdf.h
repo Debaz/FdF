@@ -6,7 +6,7 @@
 /*   By: klescaud <klescaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/11 13:06:55 by klescaud          #+#    #+#             */
-/*   Updated: 2014/11/11 16:04:07 by klescaud         ###   ########.fr       */
+/*   Updated: 2014/11/12 18:56:53 by klescaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@
 # define SIZE_Y 600
 # define TITLE "Visualisateur Fil de Fer - by Debaz"
 # define ABS(x) ((( x ) < 0 ) ? - ( x ) : ( x ))
+# define SCALE 20
 
-# define WHT 0000000000
-# define BLK 0255255255
+# define BLK 0000000000
+# define WHT 0255255255
 # define RED 0255000000
 # define BLU 0000000255
 # define YEL 0255255000
