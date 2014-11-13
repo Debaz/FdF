@@ -6,7 +6,7 @@
 /*   By: klescaud <klescaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/11 13:06:55 by klescaud          #+#    #+#             */
-/*   Updated: 2014/11/12 18:56:53 by klescaud         ###   ########.fr       */
+/*   Updated: 2014/11/13 17:04:37 by klescaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define TITLE "Visualisateur Fil de Fer - by Debaz"
 # define ABS(x) ((( x ) < 0 ) ? - ( x ) : ( x ))
 # define SCALE 20
+# define MAP_WIDTH 10
+# define MAP_LEN 10
 
 # define BLK 0000000000
 # define WHT 0255255255
@@ -44,8 +46,10 @@ typedef struct			s_point
 {
 	int		x;
 	int		y;
+	int		z;
 }						t_point;
 
 void		draw_segment(t_screen screen, t_point a, t_point b);
+t_point		new_point(int x, int y, int z);
 
 #endif

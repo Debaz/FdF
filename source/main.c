@@ -6,7 +6,7 @@
 /*   By: klescaud <klescaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/11 12:38:00 by klescaud          #+#    #+#             */
-/*   Updated: 2014/11/12 19:15:43 by klescaud         ###   ########.fr       */
+/*   Updated: 2014/11/13 17:33:10 by klescaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,26 +53,27 @@ void		draw_segment(t_screen screen, t_point a, t_point b)
 	}
 }
 
-int		**get_map(char *path)
+t_point		*get_map(char *path)
 {
-	int		map[10][10];
+	t_point		*map;
 	int		fd;
-	char	**line;
+	char	*line;
 	char	**splited_line;
 	int		x;
 	int		y;
 
+	map = malloc(sizeof(t_point) * (MAP_LEN * MAP_WIDTH));
 	x = 0;
 	y = 0;
 	if ((fd = open(path, O_RDONLY)) < 2)
 		ft_putendl("ERROR -> Open failed.");
-	while (get_next_line(fd, line) < 0)
+	while (get_next_line(fd, &line) > 0)
 	{
-		splited_line = ft_strsplit(*line, ' ');
+		splited_line = ft_strsplit(line, ' ');
 		x = 0;
-		while (x < 10)
+		while (x < MAP_WIDTH)
 		{
-			map[y][x] = ft_atoi(splited_line[x]);
+			map[(MAP_WIDTH * y) + x] = new_point(x, y, ft_atoi(splited_line[x]));
 			x++;
 		}
 		y++;
@@ -80,45 +81,32 @@ int		**get_map(char *path)
 	return (map);
 }
 
-void	print_map(int **map)
+void	print_map(t_point *map)
 {
 	int		x;
-	int		y;
 
 	x = 0;
-	y = 0;
-	while (y < 10)
+	while (x < (MAP_WIDTH * MAP_LEN))
 	{
-		while (x < 10)
-		{
-			ft_putstr(ft_itoa(map[y][x]));
-			ft_putchar(' ');
-			x++;
-		}
-		x = 0;
-		y++;
-		ft_putchar('\n');
+		ft_putstr(ft_itoa(map[x].z));
+		ft_putchar(' ');
+		x++;
+		if (x % (MAP_WIDTH) == 0)
+			ft_putchar('\n');
 	}
 }
 
 int		main(int ac, char **av)
 {
-	t_screen	screen;
-	t_point		a;
-	t_point		b;
-	int			map[10][10];
+//	t_screen	screen;
+	t_point		*map;
 
-	b.x = 50;
-	b.y = 50;
-	a.x = 750;
-	a.y = 550;
-	if (ac == 1)
+	if (ac == 2)
 	{
 		map = get_map(av[1]);
 		print_map(map);
-		screen = do_fdf();
-		draw_segment(screen, a, b);
-		sleep(2);
+//		screen = do_fdf();
+//		sleep(2);
 	}
 	return (0);
 }

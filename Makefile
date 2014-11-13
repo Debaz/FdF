@@ -6,13 +6,14 @@
 #    By: klescaud <klescaud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/11 12:27:54 by klescaud          #+#    #+#              #
-#    Updated: 2014/11/11 13:13:39 by klescaud         ###   ########.fr        #
+#    Updated: 2014/11/13 16:26:43 by klescaud         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 NAME =		FdF
 
-SOURCES =	./source/main.c
+SOURCES =	./source/main.c				\
+			./source/graphics.c
 
 LIBPATH =	./source/libft/
 
