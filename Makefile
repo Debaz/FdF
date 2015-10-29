@@ -6,7 +6,7 @@
 #    By: Debaz <klescaud@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/10/28 11:15:25 by Debaz             #+#    #+#              #
-#    Updated: 2015/10/28 16:33:22 by Debaz            ###   ########.fr        #
+#    Updated: 2015/10/29 12:18:50 by klescaud         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -18,9 +18,9 @@ CFLAGS = -Wall -Wextra -Werror -lmlx -framework OpenGL -framework AppKit
 
 OBJ =
 
-INCLUDES = ./sources/libft/includes/ ./includes/
+INCLUDES = ./libft/includes/ ./includes/
 
-LIBPATH = ./sources/libft/
+LIBPATH = ./libft/
 
 all: $(NAME)
 
