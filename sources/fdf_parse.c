@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   fdf_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klescaud <klescaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/29 12:20:12 by klescaud          #+#    #+#             */
-/*   Updated: 2015/10/30 10:58:42 by klescaud         ###   ########.fr       */
+/*   Created: 2015/10/30 10:40:34 by klescaud          #+#    #+#             */
+/*   Updated: 2015/10/30 10:55:06 by klescaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include <fdf.h>
 
-# include <libft.h>
-# include <mlx.h>
-# include <fcntl.h>
+char	*fdf_parse(int fd)
+{
+	char	*file;
+	char	*tmp;
 
-# define HEIGHT 500
-# define LENGTH 500
-# define TITLE "Debaz\'s fdf"
-
-typedef struct		s_env{
-	void	*mlx;
-	void	*win;
-}					t_env;
-
-char	*fdf_parse(int fd);
-
-#endif
+	file = ft_strnew(0);
+	tmp = ft_strnew(0);
+	while (read(fd, tmp, 1))
+	{
+		file = ft_strjoin(file, tmp);
+		free(tmp);
+		tmp = ft_strnew(0);
+	}
+	return (file);
+}
