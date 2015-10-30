@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_parse.c                                        :+:      :+:    :+:   */
+/*   fdf_graphics.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klescaud <klescaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/30 10:40:34 by klescaud          #+#    #+#             */
-/*   Updated: 2015/10/30 11:11:07 by klescaud         ###   ########.fr       */
+/*   Created: 2015/10/30 11:11:25 by klescaud          #+#    #+#             */
+/*   Updated: 2015/10/30 11:20:21 by klescaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fdf.h>
-
-char	*fdf_parse(int fd)
+void	fdf_draw_line(int x1, int y1, int x2, int y2)
 {
-	char	*file;
-	char	*tmp;
+	int		dx;
+	int		dy;
+	int		e;
 
-	file = ft_strnew(0);
-	tmp = ft_strnew(0);
-	while (read(fd, tmp, 1))
+	e = x2 - x1;
+	dx = e * 2;
+	dy = (y2 - y1) * 2;
+	while (x1 <= x2)
 	{
-		file = ft_strjoin(file, tmp);
-		free(tmp);
-		tmp = ft_strnew(0);
+		
 	}
-	return (file);
 }
-
