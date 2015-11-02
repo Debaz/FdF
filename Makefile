@@ -6,7 +6,7 @@
 #    By: Debaz <klescaud@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/10/28 11:15:25 by Debaz             #+#    #+#              #
-#    Updated: 2015/10/30 11:00:08 by klescaud         ###   ########.fr        #
+#    Updated: 2015/10/31 15:50:09 by Debaz            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -24,8 +24,8 @@ LIBPATH = ./libft/
 all: $(NAME)
 
 $(NAME):
-	@echo "Compilation du projet ..."
 	@make -C $(LIBPATH)
+	@echo "Compilation du projet ..."
 	@gcc -o $(NAME) $(SRCS) $(INCLUDES) $(CFLAGS) -L$(LIBPATH) -lft
 	@echo "Done !"
 

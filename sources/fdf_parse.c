@@ -6,7 +6,7 @@
 /*   By: klescaud <klescaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/30 10:40:34 by klescaud          #+#    #+#             */
-/*   Updated: 2015/10/30 11:11:07 by klescaud         ###   ########.fr       */
+/*   Updated: 2015/10/31 16:27:38 by Debaz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ char	*fdf_parse(int fd)
 		free(tmp);
 		tmp = ft_strnew(0);
 	}
+	free(tmp);
 	return (file);
 }
-

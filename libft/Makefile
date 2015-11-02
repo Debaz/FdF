@@ -6,7 +6,7 @@
 #    By: klescaud <klescaud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/02/04 21:24:16 by klescaud          #+#    #+#              #
-#    Updated: 2015/10/28 16:30:40 by Debaz            ###   ########.fr        #
+#    Updated: 2015/10/31 15:49:28 by Debaz            ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -133,16 +133,13 @@ INCLUDES =	-I./includes
 all: $(NAME)
 
 $(NAME):
-	@echo "Compilation des binaires ..."
 	@gcc -c $(SRCS) $(CFLAGS) $(INCLUDES)
 	@echo "Compilation de la librairie ..."
 	@ar -rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
-	@echo "Done !"
 
 clean:
 	@rm $(OBJ)
-	@echo "Binaires detruits."
 
 fclean: clean
 	@rm $(NAME)

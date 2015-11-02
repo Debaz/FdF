@@ -6,21 +6,10 @@
 /*   By: klescaud <klescaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/30 11:11:25 by klescaud          #+#    #+#             */
-/*   Updated: 2015/10/30 11:20:21 by klescaud         ###   ########.fr       */
+/*   Updated: 2015/10/31 15:58:02 by Debaz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	fdf_draw_line(int x1, int y1, int x2, int y2)
+void	fdf_draw_line(t_point x1, t_point x2, t_env env)
 {
-	int		dx;
-	int		dy;
-	int		e;
-
-	e = x2 - x1;
-	dx = e * 2;
-	dy = (y2 - y1) * 2;
-	while (x1 <= x2)
-	{
-		
-	}
 }

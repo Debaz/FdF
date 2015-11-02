@@ -6,7 +6,7 @@
 /*   By: klescaud <klescaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/29 12:20:12 by klescaud          #+#    #+#             */
-/*   Updated: 2015/10/30 10:58:42 by klescaud         ###   ########.fr       */
+/*   Updated: 2015/10/31 15:59:45 by Debaz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ typedef struct		s_env{
 	void	*mlx;
 	void	*win;
 }					t_env;
+
+typedef struct		s_point{
+	int		x;
+	int		y;
+	int		color;
+	int		value;
+}					t_point;
 
 char	*fdf_parse(int fd);
 
