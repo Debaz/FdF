@@ -3,38 +3,54 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: Debaz <klescaud@42.fr>                     +#+  +:+       +#+         #
+#    By: klescaud <klescaud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2015/10/28 11:15:25 by Debaz             #+#    #+#              #
-#    Updated: 2015/10/31 15:50:09 by Debaz            ###   ########.fr        #
+#    Created: 2015/11/04 11:44:10 by klescaud          #+#    #+#              #
+#    Updated: 2015/11/04 11:48:03 by klescaud         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
-NAME = fdf
+NAME=		Fdf
 
-SRCS = 	./sources/main.c \
-		./sources/fdf_parse.c
+SRC=		./sources/main.c \
+			./sources/graphics.c \
+			./sources/parser.c \
+			./sources/functions.c
 
-CFLAGS = -Wall -Wextra -Werror -lmlx -framework OpenGL -framework AppKit
+OBJ=		./main.o \
+			./graphics.o \
+			./parser.o \
+			./functions.o
 
-INCLUDES = -I./libft/includes/ -I./includes/
+CC=			gcc
 
-LIBPATH = ./libft/
+FLAGS=		-Wall -Wextra -Werror
 
-all: $(NAME)
+LD_FLAGS=	-lmlx -L/usr/X11/lib -framework OpenGL -framework AppKit
 
-$(NAME):
-	@make -C $(LIBPATH)
-	@echo "Compilation du projet ..."
-	@gcc -o $(NAME) $(SRCS) $(INCLUDES) $(CFLAGS) -L$(LIBPATH) -lft
-	@echo "Done !"
+INC_FLAGS=  -I/opt/X11/include/X11 -I./includes
+
+export CC=	gcc
+
+export CFLAGS= -Wall -Wextra -Werror
+
+all: 			$(NAME)
+
+$(NAME): 		$(OBJ)
+				@$(CC) -o $(NAME) $(MLX) $(OBJ) $(LD_FLAGS)
+				@echo "$(NAME) is done !"
+
+%.o : 			%.c includes/fdf.h
+				@$(CC) -c $< -o $@ $(INC_FLAGS) $(FLAGS)
 
 clean:
-	@make -C $(LIBPATH) fclean
-	@echo "Binaires detruits."
+				@rm -f $(OBJ)
+				@echo "objs are cleaned!"
 
-fclean: clean
-	@rm $(NAME)
-	@echo "Projet detruit."
+fclean: 		clean
+				@rm -rf $(NAME)
+				@echo "$(NAME) is cleaned !"
 
-re: fclean all
+re:				fclean all
+
+.PHONY :        all fclean re
