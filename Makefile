@@ -6,51 +6,45 @@
 #    By: klescaud <klescaud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/04 11:44:10 by klescaud          #+#    #+#              #
-#    Updated: 2015/11/04 11:48:03 by klescaud         ###   ########.fr        #
+#    Updated: 2015/11/04 12:30:40 by klescaud         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
-NAME=		Fdf
+NAME	= fdf
 
-SRC=		./sources/main.c \
-			./sources/graphics.c \
-			./sources/parser.c \
-			./sources/functions.c
+CC		= gcc
 
-OBJ=		./main.o \
-			./graphics.o \
-			./parser.o \
-			./functions.o
+CFLAGS	= -Wall -Wextra -Werror
 
-CC=			gcc
+LFLAGS	= -L./libft -lft -L/usr/X11/lib -lXext -lX11 -lmlx
 
-FLAGS=		-Wall -Wextra -Werror
+SRC		= 	./sources/graphics.c \
+			./sources/get_line.c \
+			./sources/hooks.c \
+			./sources/helper.c \
+			./sources/init.c \
+			./sources/main.c
 
-LD_FLAGS=	-lmlx -L/usr/X11/lib -framework OpenGL -framework AppKit
+INC		= -I./includes -I./libft/includes
 
-INC_FLAGS=  -I/opt/X11/include/X11 -I./includes
+OBJ		= graphics.o get_line.o hooks.o helper.o init.o main.o
 
-export CC=	gcc
+all: $(NAME)
 
-export CFLAGS= -Wall -Wextra -Werror
-
-all: 			$(NAME)
-
-$(NAME): 		$(OBJ)
-				@$(CC) -o $(NAME) $(MLX) $(OBJ) $(LD_FLAGS)
-				@echo "$(NAME) is done !"
-
-%.o : 			%.c includes/fdf.h
-				@$(CC) -c $< -o $@ $(INC_FLAGS) $(FLAGS)
+$(NAME):
+	@make -C libft
+	@$(CC) $(SRC) $(CFLAGS) $(INC)
+	@echo "Linking binary."
+	@$(CC) -o $(NAME) $(OBJ) $(LFLAGS)
 
 clean:
-				@rm -f $(OBJ)
-				@echo "objs are cleaned!"
+	@echo "Deleting obj files."
+	@rm -f $(OBJ)
 
-fclean: 		clean
-				@rm -rf $(NAME)
-				@echo "$(NAME) is cleaned !"
+fclean: clean
+	@echo "Deleting fdf."
+	@rm -f $(NAME)
 
-re:				fclean all
+re: fclean all
 
-.PHONY :        all fclean re
+.PHONY: all clean fclean re

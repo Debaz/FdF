@@ -6,78 +6,95 @@
 /*   By: klescaud <klescaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/04 10:50:00 by klescaud          #+#    #+#             */
-/*   Updated: 2015/11/04 11:03:23 by klescaud         ###   ########.fr       */
+/*   Updated: 2015/11/04 12:17:14 by klescaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <mlx.h>
+#include <stdlib.h>
 #include "fdf.h"
 
-static int		get_key(int keycode, t_mlx *mlx)
+int					ft_put_px(t_coord *e, int x, int y)
 {
-	(void)mlx;
-	if (keycode == 65307)
-		exit(EXIT_SUCCESS);
+	mlx_pixel_put(e->mlx, e->win, (x + e->move_x), (y + e->move_y), 0xFFFFFF);
 	return (0);
 }
 
-static int 		get_expose(t_mlx *mlx)
+void				ft_init_put_px(t_coord *e)
 {
-	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
+	int			index[2];
+
+	index[0] = 0;
+	while (index[0] != e->length)
+	{
+		index[1] = 0;
+		while (index[1] != e->width)
+		{
+			ft_put_px(e, e->val[index[0]][index[1]][0],
+					  e->val[index[0]][index[1]][1]);
+			index[1]++;
+		}
+		index[0]++;
+	}
+}
+
+int					ft_init(int **val, int length, int width)
+{
+	t_coord		e;
+
+	e.move_x = 0;
+	e.move_y = 0;
+	e.zoom = 0;
+	e.t_val = val;
+	e.length = length;
+	e.width = width;
+	e.val = ft_init_coord(e.t_val, e.length, e.width, &e);
+	e.mlx = mlx_init();
+	e.win = mlx_new_window(e.mlx, 1920, 1080, "fdf");
+	mlx_expose_hook(e.win, &ft_expose_hook, &e);
+	e.indice = mlx_key_hook(e.win, &ft_key_hook, &e);
+	e.indice = mlx_mouse_hook(e.win, &ft_mouse_hook, &e);
+	e.indice = mlx_loop(e.mlx);
 	return (0);
 }
 
-char			*ft_perror(const char *str)
+int					ft_start(int argc, char **argv, char **str, int *ver)
 {
-	perror(str);
-	return (NULL);
+	if (argc != 2)
+	{
+		ft_putstr("usage: ./fdf file1\n");
+		return (0);
+	}
+	if ((ver[0] = open(argv[1], O_RDONLY)) == -1)
+	{
+		perror(argv[1]);
+		return (0);
+	}
+	if ((ver[1] = ft_open_file(ver[0], str)) == -1)
+	{
+		perror(argv[1]);
+		return (0);
+	}
+	return (1);
 }
 
-char			*parse_arg(int ac, char **av)
+int					main(int argc, char *argv[])
 {
-	int		fd;
-	int		ret;
-	char	buf[BUFSIZE];
-	char	*totalbuf;
+	char		*str;
+	int			ver[2];
+	int			length;
+	int			width;
+	int			**val;
 
-	totalbuf = NULL;
-	if (ac != 2)
+	if (ft_start(argc, argv, &str, ver) == 0)
+		return (-1);
+	if ((val = ft_create_tab(&str, &length, &width)) == NULL)
 	{
-		ft_putstr("usage : ./FdF file1\n");
-		return (NULL);
+		ft_putstr(argv[1]);
+		ft_putstr(": Incorrect value in file\n");
+		return (0);
 	}
-	if ((fd = open(av[1], O_RDONLY)) == -1)
-		return (ft_perror("FdF"));
-	while ((ret = read(fd, buf, BUFSIZE)) > 0)
-	{
-		buf[ret] = 0;
-		totalbuf = ft_strjoin(totalbuf, buf);
-	}
-	if (ret == -1 || close(fd) == -1)
-		return (ft_perror("FdF"));
-	if (!totalbuf)
-		ft_putstr("FdF : map is empty\n");
-	return (totalbuf);
-}
-
-int				main(int ac, char **av)
-{
-	t_mlx	mlx;
-	char	*totalbuf;
-
-	if ((totalbuf = parse_arg(ac, av)) == NULL)
-		return (1);
-	if ((mlx.ptr = mlx_init()) == NULL)
-		return (ft_putstr("FdF: mlx_init failed\n"));
-	if ((mlx.img = mlx_new_image(mlx.ptr, WIN_X, WIN_Y)) == NULL)
-		return (ft_putstr("FdF: mlx_new_image failed\n"));
-	mlx.data = mlx_get_data_addr(mlx.img, &mlx.bpp, &mlx.sline, &mlx.endian);
-	get_map(&mlx, totalbuf);
-	if ((mlx.win = mlx_new_window(mlx.ptr, WIN_X,
-								  WIN_Y, "Debaz\'s FdF")) == NULL)
-		return (ft_putstr("FdF: mlx_new_window fail to work\n"));
-	aff_fdf(&mlx);
-	mlx_key_hook(mlx.win, &get_key, &mlx);
-	mlx_expose_hook(mlx.win, &get_expose, &mlx);
-	mlx_loop(mlx.ptr);
+	ft_init(val, length, width);
 	return (0);
 }
