@@ -6,7 +6,7 @@
 /*   By: klescaud <klescaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/29 12:20:12 by klescaud          #+#    #+#             */
-/*   Updated: 2015/11/04 12:21:37 by klescaud         ###   ########.fr       */
+/*   Updated: 2015/11/05 13:11:42 by klescaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,47 +21,35 @@
 # include <fcntl.h>
 # include <stdio.h>
 
-typedef struct		s_coord
+# include <mlx.h>
+# include <stdlib.h>
+# include <fcntl.h>
+
+typedef struct		s_env
 {
-	int		***val;
-	int		length;
-	int		width;
-	int		indice;
 	void	*mlx;
 	void	*win;
+	int		zoom;
+}					t_env;
+
+typedef struct		s_coord
+{
 	int		x;
 	int		y;
-	int		max;
-	int		move_x;
-	int		move_y;
-	int		move_y_z;
-	int		move_x_z;
-	int		zoom;
-	int		**t_val;
-	int		sqr_x;
-	int		sqr_y;
-}				t_coord;
+	int		point;
+}					t_coord;
 
-int		ft_start(int argc, char **argv, char **str, int *ver);
-int		ft_open_file(int fd, char **file);
-int		*ft_atoi_line(char *str, int *i);
-int		**ft_create_tab(char **str, int *i, int *len);
-int		ft_init(int **val, int length, int width);
-int		ft_key_hook(int keycode, t_coord *e);
-int		ft_key_h(int keycode, t_coord *e);
-int		***ft_init_coord(int **val, int length, int width, t_coord *e);
-void	ft_init_c(int *x, int *y, int *index, int **val);
-int		ft_put_px(t_coord *e, int x, int y);
-void	ft_init_put_px(t_coord *e);
-void	ft_set_coord(int *x, int *start, int nb1, int nb2);
-void	ft_draw_line_x(t_coord *e, int i, int j);
-void	ft_draw_line_y(t_coord *e, int i, int j);
-void	ft_init_line_x(t_coord *e);
-void	ft_init_line_y(t_coord *e);
-int		ft_expose_hook(t_coord *e);
-int		ft_mouse_hook(int button, int x, int y, t_coord *e);
-void	ft_put_help(t_coord *e, int m_x, int m_y);
-void	ft_write_op(t_coord *e);
-void	ft_verif_value(int **val, int length, int width);
+void		ft_init_mlx(t_env *e, int line, int col, int size);
+int			key_hook(int keycode);
+int			**read_file_fdf(char *file, int *line, int *col);
+int			count_column(char **split);
+int			count_line(char *file);
+void		draw_grid(int **point, t_env *e, int line, int col);
+void		draw_line(t_env *e, t_coord start, t_coord end);
+t_coord		**stock_coord(int **point, int line, int coli, t_env *e);
+t_coord		*define_coord(int x, int y, int z, t_env *e);
+void		define_first_coord(t_coord *pos, int x, int y, int z);
+int			ft_sqrt(int nb);
+int			ft_pow(int nb, unsigned int p);
 
 #endif

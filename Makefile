@@ -6,43 +6,32 @@
 #    By: klescaud <klescaud@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/04 11:44:10 by klescaud          #+#    #+#              #
-#    Updated: 2015/11/04 13:49:57 by klescaud         ###   ########.fr        #
+#    Updated: 2015/11/05 13:14:37 by klescaud         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
-NAME	= fdf
+NAME	= 	fdf
 
-CC		= gcc
+CFLAGS	= 	-Wall -Wextra -Werror
 
-CFLAGS	= -Wall -Wextra -Werror -ansi -pedantic -Wshadow -Wno-missing-noreturn \
-			-Wno-padded -Wno-unreachable-code -Wredundant-decls \
-			-Wmissing-declarations
+LFLAGS	= 	-L./libft -lft -lmlx -framework OpenGL -framework AppKit
 
-LFLAGS	= -L./libft -lft -L/usr/X11/lib -lXext -lX11 -lmlx
+SRCS	= 	./sources/main.c \
+			./sources/draw.c \
+			./sources/math.c \
+			./sources/event.c
 
-SRC_DIR	= ./srcs/
+INC		= 	-I./includes -I./libft/includes
 
-SRC		= drawline.c get_line.c hooks.c helper.c init.c main.c
-
-VPATH	= $(SRC_DIR)
-
-INC		= -I./includes -I./libft/includes
-
-O_DIR	= ./obj
-
-OBJ		= $(addprefix $(O_DIR)/,$(SRC:.c=.o))
+OBJ		= 	main.o draw.o math.o event.o
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	@make -C libft
+$(NAME):
+	@make -C ./libft
 	@echo "Linking binary."
-	@$(CC) -o $(NAME) $^ $(LFLAGS)
-
-$(O_DIR)/%.o: %.c
-	@mkdir -p $(O_DIR)
-	@printf "."
-	@$(CC) $(CFLAGS) -c $< -I ./includes -o $@
+	@gcc -c $(SRCS) $(INC) $(CFLAGS)
+	@gcc -o $(NAME) $(OBJ) $(INC) $(CFLAGS) $(LFLAGS)
 
 clean:
 	@echo "Deleting obj files."
