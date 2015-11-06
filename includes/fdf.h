@@ -5,63 +5,130 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: klescaud <klescaud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/29 12:20:12 by klescaud          #+#    #+#             */
-/*   Updated: 2015/11/04 12:21:37 by klescaud         ###   ########.fr       */
+/*   Created: 2015/11/06 10:02:02 by klescaud          #+#    #+#             */
+/*   Updated: 2015/11/06 10:16:13 by klescaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include <unistd.h>
 # include <mlx.h>
-# include <string.h>
 # include <stdlib.h>
-# include <libft.h>
-# include <fcntl.h>
+# include <unistd.h>
 # include <stdio.h>
+# include <fcntl.h>
+# include <math.h>
 
-typedef struct		s_coord
-{
-	int		***val;
-	int		length;
-	int		width;
-	int		indice;
+# include "libft.h"
+
+# define DEC_T 100
+# define DEC_L 100
+# define SIZE_W 20
+# define SIZE_H 20
+# define WINDOW_SIZE_H 1000
+# define WINDOW_SIZE_W 2000
+
+# define MOVE_UP -100
+# define MOVE_DOWN 100
+# define MOVE_LEFT -100
+# define MOVE_RIGHT 100
+# define MOVE_ZOOM_IN 1.1
+# define MOVE_ZOOM_OUT 0.9
+# define MOVE_ROT_X_U -M_PI / 64
+# define MOVE_ROT_X_D M_PI / 64
+# define MOVE_ROT_Y_U -M_PI / 64
+# define MOVE_ROT_Y_D M_PI / 64
+# define MOVE_ROT_Z_U -M_PI / 64
+# define MOVE_ROT_Z_D M_PI / 64
+# define KEY_ESC 53
+# define KEY_UP 126
+# define KEY_DOWN 125
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
+# define KEY_ZOOM_IN 69
+# define KEY_ZOOM_OUT 78
+# define KEY_ROT_X_U 86
+# define KEY_ROT_X_D 83
+# define KEY_ROT_Y_U 87
+# define KEY_ROT_Y_D 84
+# define KEY_ROT_Z_U 88
+# define KEY_ROT_Z_D 85
+
+typedef struct	s_point {
+	double	x;
+	double	y;
+	double	z;
+	double	s;
+	int		z_color;
+}				t_point;
+
+typedef struct	s_line {
+	t_point	**points;
+	int		len;
+}				t_line;
+
+typedef struct	s_map {
+	t_line	**lines;
+	int		len;
+}				t_map;
+
+typedef struct	s_env {
 	void	*mlx;
 	void	*win;
-	int		x;
-	int		y;
-	int		max;
-	int		move_x;
-	int		move_y;
-	int		move_y_z;
-	int		move_x_z;
-	int		zoom;
-	int		**t_val;
-	int		sqr_x;
-	int		sqr_y;
-}				t_coord;
+	t_map	*map;
+	t_point	center;
+	void	*img;
+	char	*pixel_img;
+	int		bpp;
+	int		s_line;
+	int		ed;
+}				t_env;
 
-int		ft_start(int argc, char **argv, char **str, int *ver);
-int		ft_open_file(int fd, char **file);
-int		*ft_atoi_line(char *str, int *i);
-int		**ft_create_tab(char **str, int *i, int *len);
-int		ft_init(int **val, int length, int width);
-int		ft_key_hook(int keycode, t_coord *e);
-int		ft_key_h(int keycode, t_coord *e);
-int		***ft_init_coord(int **val, int length, int width, t_coord *e);
-void	ft_init_c(int *x, int *y, int *index, int **val);
-int		ft_put_px(t_coord *e, int x, int y);
-void	ft_init_put_px(t_coord *e);
-void	ft_set_coord(int *x, int *start, int nb1, int nb2);
-void	ft_draw_line_x(t_coord *e, int i, int j);
-void	ft_draw_line_y(t_coord *e, int i, int j);
-void	ft_init_line_x(t_coord *e);
-void	ft_init_line_y(t_coord *e);
-int		ft_expose_hook(t_coord *e);
-int		ft_mouse_hook(int button, int x, int y, t_coord *e);
-void	ft_put_help(t_coord *e, int m_x, int m_y);
-void	ft_write_op(t_coord *e);
-void	ft_verif_value(int **val, int length, int width);
+typedef struct	s_matrice {
+	double a1;
+	double a2;
+	double a3;
+	double a4;
+	double b1;
+	double b2;
+	double b3;
+	double b4;
+	double c1;
+	double c2;
+	double c3;
+	double c4;
+	double d1;
+	double d2;
+	double d3;
+	double d4;
+}				t_matrice;
+
+t_map			*ft_parse_map(char **av, int fd);
+int				ft_points(char *line, int nb_line, t_point ***array_points);
+void			ft_parse_points (char *nb_str);
+int				ft_getnbr(char *str);
+int				ft_map_line(char *map);
+void			draw_windows(char *title, int weight, int height, t_env *e);
+void			draw_map(t_env *e);
+void			fdf_exit(void);
+void			fdf_malloc_error(void);
+void			fdf_map_error(void);
+void			fdf_arg_error(void);
+void			ft_cal_rotation(t_env *e, double rot, char axe);
+void			ft_cal_translat(t_env *e, double x, double y, double z);
+void			ft_cal_scale(t_env *e, double s);
+t_matrice		*ft_matrice_rotation_x(double beta);
+t_matrice		*ft_matrice_rotation_y(double beta);
+t_matrice		*ft_matrice_rotation_z(double beta);
+t_matrice		*ft_matrice_translation(double tx, double ty, double tz);
+t_matrice		*ft_matrice_scale(double s);
+int				key_hook(int keycode, t_env *e);
+int				get_color(t_point *point1, t_point *point2);
+void			get_center(t_env *e);
+void			draw_reload(t_env *e);
+int				point_in_window(t_point point1, t_point point2);
+void			adapt_map(t_env *e);
+int				point_out_window(t_point *point1);
 
 #endif
