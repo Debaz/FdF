@@ -13,7 +13,7 @@
 #include "ft_fdf.h"
 #include "libft/includes/libft.h"
 
-void ligne_y(t_mlx_env *mlx_e, int ***tab_i)
+void		ligne_y(t_mlx_env *mlx_e, int ***tab_i)
 {
 	mlx_e->xy[0] = 0;
 	mlx_e->xy[1] = 0;
@@ -33,7 +33,7 @@ void ligne_y(t_mlx_env *mlx_e, int ***tab_i)
 	}
 }
 
-void ligne_x(t_mlx_env *mlx_e, int ***tab_i)
+void		ligne_x(t_mlx_env *mlx_e, int ***tab_i)
 {
 	mlx_e->xy[0] = 0;
 	mlx_e->xy[1] = 0;
