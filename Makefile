@@ -48,7 +48,6 @@ $(NAME): 		$(OBJ)
 
 clean:
 				@rm -f $(OBJ)
-				@(cd $(HELLO_DIR) && $(MAKE) $@)
 				@echo "$(NAME)_objs => CLEANED."
 
 fclean: 		clean
